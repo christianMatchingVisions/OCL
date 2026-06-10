@@ -12,6 +12,7 @@ export const collections = {
       description: z.string(),
       language: z.string(),
       publishedAt: z.string().nullable(),
+      updatedAt: z.string().nullable().optional(),
       heroImage: z.string().nullable(),
     }),
   }),

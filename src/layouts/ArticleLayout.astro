@@ -9,20 +9,57 @@ interface Props {
   description: string;
   canonicalPath: string; // e.g. /noticias/mi-articulo/
   publishedAt?: string | null;
+  updatedAt?: string | null;
   heroImage?: string | null;
+  faq?: { question: string; answer: string }[];
 }
-const { title, description, canonicalPath, publishedAt, heroImage } = Astro.props;
+const { title, description, canonicalPath, publishedAt, updatedAt, heroImage, faq } = Astro.props;
 const gaId = import.meta.env.PUBLIC_GA_ID;
 const canonical = new URL(canonicalPath, Astro.site).href;
-const jsonLd = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "NewsArticle",
-  headline: title,
-  description,
-  datePublished: publishedAt ?? undefined,
-  image: heroImage ?? undefined,
-  publisher: { "@type": "Organization", name: "Online Casino Latino", url: "https://onlinecasinolatino.com" },
-});
+const fmtEs = new Intl.DateTimeFormat("es", { day: "numeric", month: "long", year: "numeric" });
+const publisher = {
+  "@type": "Organization",
+  "@id": "https://onlinecasinolatino.com/#org",
+  name: "Online Casino Latino",
+  url: "https://onlinecasinolatino.com",
+  logo: { "@type": "ImageObject", url: "https://onlinecasinolatino.com/favicon.svg" },
+};
+const graph: object[] = [
+  {
+    "@type": "NewsArticle",
+    "@id": `${canonical}#article`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
+    headline: title,
+    description,
+    inLanguage: "es",
+    datePublished: publishedAt ?? undefined,
+    dateModified: updatedAt ?? publishedAt ?? undefined,
+    image: heroImage ?? undefined,
+    author: publisher,
+    publisher,
+    isAccessibleForFree: true,
+  },
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: "https://onlinecasinolatino.com/" },
+      { "@type": "ListItem", position: 2, name: "Noticias", item: "https://onlinecasinolatino.com/noticias/" },
+      { "@type": "ListItem", position: 3, name: title, item: canonical },
+    ],
+  },
+];
+if (faq?.length) {
+  graph.push({
+    "@type": "FAQPage",
+    "@id": `${canonical}#faq`,
+    mainEntity: faq.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  });
+}
+const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
 ---
 
 <!doctype html>
@@ -39,6 +76,9 @@ const jsonLd = JSON.stringify({
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     {heroImage && <meta property="og:image" content={heroImage} />}
+    <meta property="og:locale" content="es_LA" />
+    {publishedAt && <meta property="article:published_time" content={publishedAt} />}
+    {(updatedAt ?? publishedAt) && <meta property="article:modified_time" content={updatedAt ?? publishedAt} />}
     <meta name="twitter:card" content="summary_large_image" />
     <script type="application/ld+json" set:html={jsonLd} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -97,7 +137,7 @@ const jsonLd = JSON.stringify({
     <section class="hero page-hero"><div class="container"><div class="hero-content">
       <nav class="breadcrumb"><a href="/">Inicio</a> › <a href="/noticias/">Noticias</a> › <span>{title}</span></nav>
       <h1>{title}</h1>
-      {publishedAt && <p class="article-date">Publicado: {new Intl.DateTimeFormat("es", { day: "numeric", month: "long", year: "numeric" }).format(new Date(publishedAt))}</p>}
+      {publishedAt && <p class="article-date">Publicado: {fmtEs.format(new Date(publishedAt))}{updatedAt && updatedAt !== publishedAt && ` · Actualizado: ${fmtEs.format(new Date(updatedAt))}`}</p>}
     </div></div></section>
 
     <section class="content-section"><div class="container">

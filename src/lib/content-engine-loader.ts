@@ -69,6 +69,7 @@ export function contentEngineLoader(opts: {
               description: article.meta.description ?? "",
               language: article.language,
               publishedAt: article.published_at,
+              updatedAt: article.updated_at ?? null,
               heroImage:
                 article.media.find((m) => m.kind === "image")?.url ?? null,
             },
