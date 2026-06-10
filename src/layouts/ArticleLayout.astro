@@ -12,6 +12,7 @@ interface Props {
   heroImage?: string | null;
 }
 const { title, description, canonicalPath, publishedAt, heroImage } = Astro.props;
+const gaId = import.meta.env.PUBLIC_GA_ID;
 const canonical = new URL(canonicalPath, Astro.site).href;
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
@@ -42,6 +43,17 @@ const jsonLd = JSON.stringify({
     <script type="application/ld+json" set:html={jsonLd} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/style.css" />
+    {gaId && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} is:inline></script>
+        <script is:inline define:vars={{ gaId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', gaId, { anonymize_ip: true });
+        </script>
+      </>
+    )}
     <style>
       .article-hero-img{max-height:380px;width:100%;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:28px}
       .article-date{font-size:.8rem;color:var(--text-muted);margin-bottom:16px}
