@@ -1,32 +1,284 @@
 {
   "redirects": [
-    { "source": "/casino/mr-bet-casino/:path*", "destination": "/casinos/mr-bet/resena/", "permanent": true },
-    { "source": "/casino/jackpotcity-casino/:path*", "destination": "/casinos/jackpotcity/resena/", "permanent": true },
-    { "source": "/casino/bitsler-casino/:path*", "destination": "/casinos/bitsler/resena/", "permanent": true },
-    { "source": "/casino/lvbet-casino/:path*", "destination": "/casinos/lvbet/resena/", "permanent": true },
-    { "source": "/casino/jackpoty-casino/:path*", "destination": "/casinos/jackpoty/resena/", "permanent": true },
-    { "source": "/casino/ultra-casino/:path*", "destination": "/casinos/ultra-casino/resena/", "permanent": true },
-    { "source": "/casino/mystake-casino/:path*", "destination": "/casinos/mystake/resena/", "permanent": true },
-    { "source": "/casino/nomini-casino/:path*", "destination": "/casinos/nomini/resena/", "permanent": true },
-    { "source": "/casino/22bet-casino/:path*", "destination": "/casinos/22bet/resena/", "permanent": true },
-    { "source": "/casino/betsson-casino/:path*", "destination": "/casinos/betsson/resena/", "permanent": true },
-    { "source": "/casino/rivalo-casino/:path*", "destination": "/casinos/rivalo/resena/", "permanent": true },
-    { "source": "/casino/stake-casino/:path*", "destination": "/casinos/stake/resena/", "permanent": true },
-    { "source": "/casino/leovegas-casino/:path*", "destination": "/casinos/leovegas/resena/", "permanent": true },
-    { "source": "/casino/novajackpot-casino/:path*", "destination": "/casinos/nova-jackpot/resena/", "permanent": true },
-    { "source": "/casino/talismania-casino/:path*", "destination": "/casinos/talismania/resena/", "permanent": true },
-    { "source": "/casino/:path*", "destination": "/casinos/", "permanent": true },
-    { "source": "/cl/:path*", "destination": "/chile/", "permanent": true },
-    { "source": "/cl", "destination": "/chile/", "permanent": true },
-    { "source": "/casinos-online-chile/:path*", "destination": "/chile/", "permanent": true },
-    { "source": "/casinos-online-argentina/:path*", "destination": "/argentina/", "permanent": true },
-    { "source": "/casinos-online-mexico/:path*", "destination": "/mexico/", "permanent": true },
-    { "source": "/casinos-online-colombia/:path*", "destination": "/colombia/", "permanent": true },
-    { "source": "/casinos-online-peru/:path*", "destination": "/peru/", "permanent": true },
-    { "source": "/casinos-online-venezuela/:path*", "destination": "/venezuela/", "permanent": true },
-    { "source": "/casinos-online-ecuador/:path*", "destination": "/ecuador/", "permanent": true },
-    { "source": "/casinos-online-legales/:path*", "destination": "/casinos/", "permanent": true },
-    { "source": "/casinos-en-dolares/:path*", "destination": "/pagos/", "permanent": true },
-    { "source": "/paypal-casino-online/:path*", "destination": "/pagos/", "permanent": true }
+    {
+      "source": "/casino/mr-bet-casino",
+      "destination": "/casinos/mr-bet/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/mr-bet-casino/",
+      "destination": "/casinos/mr-bet/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/jackpotcity-casino",
+      "destination": "/casinos/jackpotcity/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/jackpotcity-casino/",
+      "destination": "/casinos/jackpotcity/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/bitsler-casino",
+      "destination": "/casinos/bitsler/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/bitsler-casino/",
+      "destination": "/casinos/bitsler/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/lvbet-casino",
+      "destination": "/casinos/lvbet/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/lvbet-casino/",
+      "destination": "/casinos/lvbet/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/jackpoty-casino",
+      "destination": "/casinos/jackpoty/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/jackpoty-casino/",
+      "destination": "/casinos/jackpoty/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/ultra-casino",
+      "destination": "/casinos/ultra-casino/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/ultra-casino/",
+      "destination": "/casinos/ultra-casino/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/mystake-casino",
+      "destination": "/casinos/mystake/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/mystake-casino/",
+      "destination": "/casinos/mystake/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/nomini-casino",
+      "destination": "/casinos/nomini/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/nomini-casino/",
+      "destination": "/casinos/nomini/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/22bet-casino",
+      "destination": "/casinos/22bet/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/22bet-casino/",
+      "destination": "/casinos/22bet/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/betsson-casino",
+      "destination": "/casinos/betsson/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/betsson-casino/",
+      "destination": "/casinos/betsson/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/rivalo-casino",
+      "destination": "/casinos/rivalo/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/rivalo-casino/",
+      "destination": "/casinos/rivalo/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/stake-casino",
+      "destination": "/casinos/stake/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/stake-casino/",
+      "destination": "/casinos/stake/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/leovegas-casino",
+      "destination": "/casinos/leovegas/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/leovegas-casino/",
+      "destination": "/casinos/leovegas/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/novajackpot-casino",
+      "destination": "/casinos/nova-jackpot/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/novajackpot-casino/",
+      "destination": "/casinos/nova-jackpot/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/talismania-casino",
+      "destination": "/casinos/talismania/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/talismania-casino/",
+      "destination": "/casinos/talismania/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/:path+",
+      "destination": "/casinos/",
+      "permanent": true
+    },
+    {
+      "source": "/casino",
+      "destination": "/casinos/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/",
+      "destination": "/casinos/",
+      "permanent": true
+    },
+    {
+      "source": "/cl/:path+",
+      "destination": "/chile/",
+      "permanent": true
+    },
+    {
+      "source": "/cl",
+      "destination": "/chile/",
+      "permanent": true
+    },
+    {
+      "source": "/cl/",
+      "destination": "/chile/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-chile",
+      "destination": "/chile/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-chile/",
+      "destination": "/chile/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-argentina",
+      "destination": "/argentina/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-argentina/",
+      "destination": "/argentina/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-mexico",
+      "destination": "/mexico/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-mexico/",
+      "destination": "/mexico/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-colombia",
+      "destination": "/colombia/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-colombia/",
+      "destination": "/colombia/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-peru",
+      "destination": "/peru/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-peru/",
+      "destination": "/peru/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-venezuela",
+      "destination": "/venezuela/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-venezuela/",
+      "destination": "/venezuela/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-ecuador",
+      "destination": "/ecuador/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-ecuador/",
+      "destination": "/ecuador/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-legales",
+      "destination": "/casinos/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-online-legales/",
+      "destination": "/casinos/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-en-dolares",
+      "destination": "/pagos/",
+      "permanent": true
+    },
+    {
+      "source": "/casinos-en-dolares/",
+      "destination": "/pagos/",
+      "permanent": true
+    },
+    {
+      "source": "/paypal-casino-online",
+      "destination": "/pagos/",
+      "permanent": true
+    },
+    {
+      "source": "/paypal-casino-online/",
+      "destination": "/pagos/",
+      "permanent": true
+    }
   ]
 }
