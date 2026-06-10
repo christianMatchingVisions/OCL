@@ -19,6 +19,12 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <Fragment set:html={head} />
+    {!head.includes("og:image") && (
+      <meta property="og:image" content="https://onlinecasinolatino.com/logos/og-image.png" />
+    )}
+    {!head.includes("twitter:card") && (
+      <meta name="twitter:card" content="summary_large_image" />
+    )}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/style.css" />
     {gaId && (

@@ -23,7 +23,7 @@ const articles = (await getCollection("articles")).sort((a, b) =>
 const cards = articles
   .map((a) => {
     const thumb = a.data.heroImage
-      ? `<div class="news-thumb" style="background:url('${escapeHtml(a.data.heroImage)}') center/cover"></div>`
+      ? `<div class="news-thumb" style="padding:0;overflow:hidden"><img src="${escapeHtml(a.data.heroImage)}" alt="${escapeHtml(a.data.title)}" loading="lazy" width="340" height="140" style="width:100%;height:100%;object-fit:cover"></div>`
       : `<div class="news-thumb">📰</div>`;
     const date = a.data.publishedAt ? fmtDate.format(new Date(a.data.publishedAt)) : "";
     return `<div class="news-card">
