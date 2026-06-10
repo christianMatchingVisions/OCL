@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Online Casino Latino">
+  <defs>
+    <linearGradient id="ocl-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5c842"/>
+      <stop offset="1" stop-color="#d4a017"/>
+    </linearGradient>
+  </defs>
+  <!-- chip edge notches -->
+  <g fill="url(#ocl-gold)">
+    <rect x="29" y="1" width="6" height="11" rx="1.5"/>
+    <rect x="29" y="52" width="6" height="11" rx="1.5"/>
+    <rect x="1" y="29" width="11" height="6" rx="1.5"/>
+    <rect x="52" y="29" width="11" height="6" rx="1.5"/>
+    <rect x="9.7" y="9.7" width="6" height="11" rx="1.5" transform="rotate(-45 12.7 15.2)"/>
+    <rect x="48.3" y="9.7" width="6" height="11" rx="1.5" transform="rotate(45 51.3 15.2)"/>
+    <rect x="9.7" y="43.3" width="6" height="11" rx="1.5" transform="rotate(45 12.7 48.8)"/>
+    <rect x="48.3" y="43.3" width="6" height="11" rx="1.5" transform="rotate(-45 51.3 48.8)"/>
+  </g>
+  <!-- chip body -->
+  <circle cx="32" cy="32" r="29" fill="#0d1220" stroke="url(#ocl-gold)" stroke-width="4"/>
+  <!-- inner dashed ring -->
+  <circle cx="32" cy="32" r="21" fill="none" stroke="url(#ocl-gold)" stroke-width="2" stroke-dasharray="3.5 4" opacity=".55"/>
+  <!-- spade -->
+  <g fill="url(#ocl-gold)">
+    <path d="M32 16 L47 38 L17 38 Z"/>
+    <circle cx="24" cy="38" r="9.5"/>
+    <circle cx="40" cy="38" r="9.5"/>
+    <path d="M32 40 C31 46 29.5 49.5 26.5 51.5 L37.5 51.5 C34.5 49.5 33 46 32 40 Z"/>
+  </g>
+</svg>

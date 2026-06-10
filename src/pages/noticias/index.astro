@@ -1,0 +1,59 @@
+---
+// @custom — hand-edited page, scripts/convert-from-static.mjs will not overwrite it.
+//
+// Same page as the original static /noticias/, but with a "Nuestros Artículos"
+// section injected above the static news cards, listing every article the
+// Content Engine has delivered to this site. New articles appear automatically
+// on the next build (the engine's article.published webhook should point at a
+// deploy hook so a rebuild is triggered on delivery).
+import { getCollection } from "astro:content";
+import Shell from "../../layouts/Shell.astro";
+import head from "../../fragments/noticias/head.html?raw";
+import body from "../../fragments/noticias/body.html?raw";
+
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+const fmtDate = new Intl.DateTimeFormat("es", { day: "numeric", month: "long", year: "numeric" });
+
+const articles = (await getCollection("articles")).sort((a, b) =>
+  (b.data.publishedAt ?? "").localeCompare(a.data.publishedAt ?? "")
+);
+
+const cards = articles
+  .map((a) => {
+    const thumb = a.data.heroImage
+      ? `<div class="news-thumb" style="background:url('${escapeHtml(a.data.heroImage)}') center/cover"></div>`
+      : `<div class="news-thumb">📰</div>`;
+    const date = a.data.publishedAt ? fmtDate.format(new Date(a.data.publishedAt)) : "";
+    return `<div class="news-card">
+      ${thumb}
+      <div class="news-body">
+        <div class="news-meta"><span class="news-date">${escapeHtml(date)}</span><span class="news-cat cat-casinos">Artículo</span></div>
+        <div class="news-title">${escapeHtml(a.data.title)}</div>
+        <div class="news-excerpt">${escapeHtml(a.data.description)}</div>
+        <a href="/noticias/${a.id}/" class="news-link">Leer más →</a>
+      </div>
+    </div>`;
+  })
+  .join("\n");
+
+const engineSection = articles.length
+  ? `<section class="top-picks"><div class="container">
+  <div class="section-header">
+    <h2 class="section-title">Nuestros Artículos</h2>
+    <p class="section-sub">Análisis y guías sobre casinos online en América Latina</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="news-grid">
+${cards}
+  </div>
+</div></section>
+`
+  : "";
+
+// Inject the engine section right after the page hero, before the static news.
+const finalBody = body.replace('<section class="top-picks">', `${engineSection}<section class="top-picks">`);
+---
+
+<Shell head={head} body={finalBody} />

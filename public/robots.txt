@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://onlinecasinolatino.com/sitemap-index.xml

@@ -1,0 +1,29 @@
+---
+/**
+ * Minimal document shell for pages ported 1:1 from the original static site.
+ * `head` and `body` are raw HTML fragments (see src/fragments/), so every
+ * ported page renders byte-for-byte like the original. Global assets
+ * (favicon, stylesheet, script.js) live here so they are managed in one place.
+ */
+interface Props {
+  head: string;
+  body: string;
+}
+const { head, body } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <Fragment set:html={head} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <Fragment set:html={body} />
+    <script src="/vendor/lenis.min.js" is:inline></script>
+    <script src="/script.js" is:inline></script>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+---
+/**
+ * Full site chrome (topbar, header, footer, responsible-gambling notice) for
+ * pages generated from Content Engine articles. Mirrors the /noticias/ chrome
+ * of the original static site.
+ */
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string; // e.g. /noticias/mi-articulo/
+  publishedAt?: string | null;
+  heroImage?: string | null;
+}
+const { title, description, canonicalPath, publishedAt, heroImage } = Astro.props;
+const canonical = new URL(canonicalPath, Astro.site).href;
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  headline: title,
+  description,
+  datePublished: publishedAt ?? undefined,
+  image: heroImage ?? undefined,
+  publisher: { "@type": "Organization", name: "Online Casino Latino", url: "https://onlinecasinolatino.com" },
+});
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <title>{title} | Online Casino Latino</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {heroImage && <meta property="og:image" content={heroImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={jsonLd} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+      .article-hero-img{max-height:380px;width:100%;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:28px}
+      .article-date{font-size:.8rem;color:var(--text-muted);margin-bottom:16px}
+      .prose img{border-radius:var(--radius);margin:18px 0}
+      .prose a{text-decoration:underline}
+      .prose table{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:14px}
+      .prose th,.prose td{border:1px solid var(--border);padding:8px 12px;text-align:left;color:var(--text-muted)}
+      .prose th{color:var(--text);background:var(--bg-card2)}
+    </style>
+  </head>
+  <body>
+    <div class="topbar"><div class="container">
+      <span>🌎 Noticias de casinos online para América Latina</span>
+      <div><span class="age-gate">+18</span><a href="/juego-responsable/">Juego Responsable</a></div>
+    </div></div>
+
+    <header><div class="container"><div class="header-inner">
+      <a href="/" class="logo"><img class="logo-mark" src="/favicon.svg" alt="" width="30" height="30" />Online Casino<span> Latino</span></a>
+      <nav aria-label="Navegación principal"><ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/casinos/">Casinos</a></li>
+        <li><a href="/bonos/">Bonos</a></li>
+        <li class="nav-dropdown"><a href="/#paises">Países</a><ul class="dropdown-menu">
+          <li><a href="/argentina/">🇦🇷 Argentina</a></li>
+          <li><a href="/mexico/">🇲🇽 México</a></li>
+          <li><a href="/colombia/">🇨🇴 Colombia</a></li>
+          <li><a href="/chile/">🇨🇱 Chile</a></li>
+          <li><a href="/peru/">🇵🇪 Perú</a></li>
+          <li><a href="/venezuela/">🇻🇪 Venezuela</a></li>
+          <li><a href="/ecuador/">🇪🇨 Ecuador</a></li>
+        </ul></li>
+        <li><a href="/pagos/">Pagos</a></li>
+        <li><a href="/juegos/">Juegos Gratis</a></li>
+        <li><a href="/noticias/" class="active">Noticias</a></li>
+        <li><a href="/mundial/">🏆 Mundial 2026</a></li>
+        <li><a href="/proveedores/">Proveedores</a></li>
+      </ul></nav>
+      <button class="hamburger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div></div></header>
+
+    <section class="hero page-hero"><div class="container"><div class="hero-content">
+      <nav class="breadcrumb"><a href="/">Inicio</a> › <a href="/noticias/">Noticias</a> › <span>{title}</span></nav>
+      <h1>{title}</h1>
+      {publishedAt && <p class="article-date">Publicado: {new Intl.DateTimeFormat("es", { day: "numeric", month: "long", year: "numeric" }).format(new Date(publishedAt))}</p>}
+    </div></div></section>
+
+    <section class="content-section"><div class="container">
+      <div class="prose">
+        {heroImage && <img class="article-hero-img" src={heroImage} alt={title} />}
+        <slot />
+      </div>
+    </div></section>
+
+    <section class="responsible"><div class="container">
+      <h2 style="font-size:1rem;color:#fff;text-align:center;margin-bottom:8px;">⚠️ Juego Responsable</h2>
+      <p>El juego debe ser entretenimiento. Solo para mayores de 18 años. Si el juego está afectando tu vida, visita <a href="/juego-responsable/">nuestra página de ayuda</a>.</p>
+    </div></section>
+
+    <footer role="contentinfo"><div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><span class="logo">Online Casino<span style="-webkit-text-fill-color:#fff"> Latino</span></span><p>Guía independiente de casinos online para América Latina.</p></div>
+        <div class="footer-col"><h4>Casinos</h4><ul><li><a href="/casinos/">Todos los casinos</a></li><li><a href="/bonos/">Mejores bonos</a></li></ul></div>
+        <div class="footer-col"><h4>Países</h4><ul><li><a href="/argentina/">Argentina</a></li><li><a href="/mexico/">México</a></li><li><a href="/colombia/">Colombia</a></li><li><a href="/chile/">Chile</a></li><li><a href="/peru/">Perú</a></li><li><a href="/venezuela/">Venezuela</a></li><li><a href="/ecuador/">Ecuador</a></li></ul></div>
+        <div class="footer-col"><h4>Información</h4><ul><li><a href="/sobre-nosotros/">Sobre nosotros</a></li><li><a href="/noticias/">Noticias</a></li><li><a href="/juego-responsable/">Juego responsable</a></li><li><a href="/privacidad/">Privacidad</a></li><li><a href="/terminos/">Términos</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>&copy; 2026 OnlineCasinoLatino.com &mdash; Solo para mayores de 18 años</span><span>Este sitio contiene enlaces de afiliados. Juega con responsabilidad.</span></div>
+    </div></footer>
+
+    <script src="/vendor/lenis.min.js" is:inline></script>
+    <script src="/script.js" is:inline></script>
+  </body>
+</html>
