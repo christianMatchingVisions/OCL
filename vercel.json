@@ -156,6 +156,11 @@
       "permanent": true
     },
     {
+      "source": "/casino/:path+/",
+      "destination": "/casinos/",
+      "permanent": true
+    },
+    {
       "source": "/casino",
       "destination": "/casinos/",
       "permanent": true
@@ -167,6 +172,11 @@
     },
     {
       "source": "/cl/:path+",
+      "destination": "/chile/",
+      "permanent": true
+    },
+    {
+      "source": "/cl/:path+/",
       "destination": "/chile/",
       "permanent": true
     },
