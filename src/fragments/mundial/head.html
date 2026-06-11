@@ -30,4 +30,45 @@
     .wc-countdown{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
     .wc-pill{background:var(--bg-card);border:1px solid var(--border);border-radius:999px;padding:6px 16px;font-size:.8rem;color:var(--text-muted)}
     .wc-pill strong{color:var(--gold)}
+  </style>
+  <style>
+    /* Explorador de grupos LATAM */
+    .wc-groups{max-width:860px;margin:0 auto}
+    .wc-tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px}
+    .wc-tab{background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);font:inherit;font-size:.85rem;font-weight:700;padding:9px 18px;border-radius:999px;cursor:pointer;transition:border-color .15s,color .15s}
+    .wc-tab:hover{border-color:var(--gold-dim);color:var(--gold-light)}
+    .wc-tab[aria-selected="true"]{background:linear-gradient(135deg,var(--gold),var(--gold-light));border-color:var(--gold);color:#000}
+    .wc-tab:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+    .wc-group{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+    .wc-groups.js-tabs .wc-group{margin-bottom:0}
+    .wc-group[hidden]{display:none}
+    .wc-group-title{font-size:1.05rem;color:#fff;margin-bottom:4px}
+    .wc-group-title .wc-group-badge{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);background:rgba(212,160,23,.12);border-radius:4px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+    .wc-group-note{font-size:.88rem;color:var(--text-muted);line-height:1.65;margin-bottom:14px}
+    .wc-fixtures{width:100%;border-collapse:collapse;font-size:.88rem;margin-bottom:14px}
+    .wc-fixtures th{text-align:left;color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;padding:8px 10px;border-bottom:1px solid var(--border)}
+    .wc-fixtures td{padding:10px;color:var(--text-muted);border-bottom:1px solid var(--border);line-height:1.5}
+    .wc-fixtures td:first-child{color:#fff;font-weight:600}
+    .wc-fixtures tr:last-child td{border-bottom:0}
+    .wc-group-link{font-size:.85rem;color:var(--gold);font-weight:600}
+    .wc-group-link:hover{color:var(--gold-light)}
+    /* Quiz de Mundiales */
+    .wc-quiz{max-width:640px;margin:0 auto;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+    .wc-quiz-progress{font-size:.74rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+    .wc-quiz-q{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:16px;line-height:1.5}
+    .wc-quiz-options{display:grid;gap:10px;margin-bottom:4px}
+    .wc-quiz-opt{display:block;width:100%;text-align:left;background:#0d1220;border:1px solid var(--border);color:var(--text-muted);font:inherit;font-size:.9rem;padding:12px 14px;border-radius:8px;cursor:pointer;transition:border-color .15s,color .15s}
+    .wc-quiz-opt:hover:not(:disabled){border-color:var(--gold-dim);color:#fff}
+    .wc-quiz-opt:focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+    .wc-quiz-opt:disabled{cursor:default}
+    .wc-quiz-opt.is-correct{border-color:var(--green);color:var(--green);font-weight:700}
+    .wc-quiz-opt.is-wrong{border-color:var(--red);color:var(--red)}
+    .wc-quiz-feedback{margin-top:14px;font-size:.88rem;line-height:1.65;color:var(--text-muted)}
+    .wc-quiz-feedback strong{color:#fff}
+    .wc-quiz-next{margin-top:16px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border:0;color:#000;font-weight:800;font-size:.85rem;padding:10px 24px;border-radius:8px;cursor:pointer}
+    .wc-quiz-next:hover{opacity:.9}
+    .wc-quiz-score{font-size:1.7rem;font-weight:800;color:var(--gold-light);margin:10px 0}
+    .wc-quiz-cta{display:inline-block;margin-top:8px;font-size:.9rem;color:var(--gold);font-weight:700}
+    .wc-quiz-cta:hover{color:var(--gold-light)}
+    @media(max-width:600px){.wc-group{padding:18px}.wc-fixtures{font-size:.8rem}.wc-fixtures th,.wc-fixtures td{padding:8px 6px}.wc-quiz{padding:20px}}
   </style>  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Dónde puedo apostar al Mundial 2026 desde América Latina?","acceptedAnswer":{"@type":"Answer","text":"Los operadores con cobertura deportiva más completa para LATAM incluyen 22Bet, Betsson y Rivalo. Todos ofrecen mercados de fútbol, cuotas en vivo y métodos de pago locales. Consulta nuestra lista de casinos y casas de apuestas antes de registrarte."}},{"@type":"Question","name":"¿Cuándo empieza y termina el Mundial 2026?","acceptedAnswer":{"@type":"Answer","text":"El torneo se juega del 11 de junio al 19 de julio de 2026 en EE. UU., Canadá y México. El partido inaugural es en el Estadio Azteca y la final en New Jersey."}},{"@type":"Question","name":"¿Hay bonos especiales por el Mundial?","acceptedAnswer":{"@type":"Answer","text":"Sí. Varios casinos lanzan promociones combinadas de casino y apuestas deportivas durante el torneo. Revisa nuestra página de mejores bonos para ver las ofertas vigentes y sus condiciones."}},{"@type":"Question","name":"¿Puedo apostar con Mercado Pago, Yape u Oxxo?","acceptedAnswer":{"@type":"Answer","text":"Sí, según tu país. Muchos operadores aceptan Mercado Pago (Argentina), PSE y Nequi (Colombia), Yape y Plin (Perú), Webpay (Chile) y Oxxo/SPEI (México). Consulta nuestra guía de pagos para más detalles."}}]}</script>
