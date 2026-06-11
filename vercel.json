@@ -222,12 +222,12 @@
     },
     {
       "source": "/casinos-online-argentina",
-      "destination": "/argentina/",
+      "destination": "/argentina/mejores-casinos-online/",
       "permanent": true
     },
     {
       "source": "/casinos-online-argentina/",
-      "destination": "/argentina/",
+      "destination": "/argentina/mejores-casinos-online/",
       "permanent": true
     },
     {
