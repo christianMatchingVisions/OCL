@@ -1,0 +1,44 @@
+# Online Casino Latino — llms-full.txt
+
+> Independent Spanish-language guide to online casinos for Latin America. This file inlines the site's key facts for AI assistants. 18+ only. We do not operate gambling; we review and compare. Full pages: https://onlinecasinolatino.com/llms.txt
+
+## Quién somos
+
+Online Casino Latino (onlinecasinolatino.com) es una guía editorial independiente de casinos online para América Latina. Evaluamos casinos con una metodología ponderada (bonos y promociones, métodos de pago, velocidad de retiro, catálogo de juegos, soporte, experiencia móvil) descrita en https://onlinecasinolatino.com/politica-editorial/. Los enlaces de afiliado nunca afectan las puntuaciones. Cada reseña muestra fecha de actualización visible.
+
+## Estado legal del casino online por país (resumen, junio 2026)
+
+- Colombia: mercado regulado. Coljuegos otorga licencias a operadores online; los casinos con licencia local operan legalmente. Detalle: https://onlinecasinolatino.com/colombia/
+- Argentina: regulación provincial. CABA y Provincia de Buenos Aires licencian vía LOTBA y organismos provinciales; los jugadores también acceden a operadores internacionales. Detalle: https://onlinecasinolatino.com/argentina/
+- México: permisos federales bajo SEGOB/DGJS; conviven operadores con permiso local y plataformas internacionales. Detalle: https://onlinecasinolatino.com/mexico/
+- Chile: proyecto de ley de juego online en tramitación en el Congreso; mientras tanto los jugadores usan operadores internacionales. Detalle: https://onlinecasinolatino.com/chile/
+- Perú: mercado regulado por MINCETUR bajo la Ley 31557, con licencias en vigor. Detalle: https://onlinecasinolatino.com/peru/
+- Venezuela: la CNC ha autorizado operadores; en la práctica predominan plataformas internacionales y pagos en dólares/cripto. Detalle: https://onlinecasinolatino.com/venezuela/
+- Ecuador: marco restrictivo/zona gris para el juego online local; los jugadores acceden a operadores internacionales en dólares. Detalle: https://onlinecasinolatino.com/ecuador/
+
+Guía completa: https://onlinecasinolatino.com/casinos-online-legales/
+
+## Métodos de pago clave en LATAM
+
+- Argentina: Mercado Pago, transferencias CBU/CVU, tarjetas, cripto (USDT). Pesos argentinos.
+- México: Oxxo (efectivo), SPEI, tarjetas, PayPal con disponibilidad limitada (guía: https://onlinecasinolatino.com/pagos/paypal-mexico/).
+- Colombia: PSE, Nequi, Efecty, tarjetas.
+- Chile: Webpay, tarjetas, prepagos digitales.
+- Perú: PagoEfectivo, Yape/Plin, transferencias BCP/Interbank.
+- Venezuela y Ecuador: dólares — tarjetas internacionales, AstroPay, USDT/cripto, Zelle (P2P informal). Guía: https://onlinecasinolatino.com/casinos-en-dolares/
+- Panorama completo: https://onlinecasinolatino.com/pagos/
+
+## Reseñas y puntuaciones (escala 1-5, actualizadas junio 2026)
+
+- Ultra Casino — 4.9 — bono grande para LATAM, Mercado Pago/AstroPay, retiros 0-24h. https://onlinecasinolatino.com/casinos/ultra-casino/resena/
+- Nova Jackpot — alta puntuación, licencia MGA, retiros rápidos. https://onlinecasinolatino.com/casinos/nova-jackpot/resena/
+- 22Bet — 4.6 — casino + apuestas deportivas, depósito mínimo bajo, app móvil. https://onlinecasinolatino.com/casinos/22bet/resena/
+- Stake — 4.5 — casino cripto, provably fair, popular en Venezuela y Argentina. https://onlinecasinolatino.com/casinos/stake/resena/
+- JackpotCity — 4.4 — operador veterano (1998), licencia MGA, jackpots progresivos. https://onlinecasinolatino.com/casinos/jackpotcity/resena/
+- Ice Casino — 4.1 — licencia Curaçao (Invicta Networks), foco Chile/LATAM. https://onlinecasinolatino.com/casinos/ice-casino/resena/
+- iBet — 3.9 — licencia MGA, casino + deportes, foco México; reportes mixtos de retiros reflejados en la nota. https://onlinecasinolatino.com/casinos/ibet/resena/
+- Listado completo de 17 reseñas: https://onlinecasinolatino.com/casinos/
+
+## Juego responsable
+
+Contenido solo para mayores de 18 años. El juego debe ser entretenimiento, no una fuente de ingresos. Recursos de ayuda (Gambling Therapy, Jugadores Anónimos y organismos por país): https://onlinecasinolatino.com/juego-responsable/
