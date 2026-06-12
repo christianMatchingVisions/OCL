@@ -320,10 +320,14 @@ header.scrolled{background:rgba(13,18,32,.9);backdrop-filter:blur(10px);-webkit-
 .cta-btn::after,.top3-cta::after{content:'';position:absolute;top:0;left:-90%;width:45%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);transition:left .55s ease;pointer-events:none}
 .cta-btn:hover::after,.top3-cta:hover::after{left:140%}
 
-/* ── FAQ: real animated accordion (answers stay in DOM for SEO) ── */
-.faq-a{max-height:0;overflow:hidden;padding:0 20px;transition:max-height .4s ease,padding .3s ease}
-.faq-item.open .faq-a{max-height:560px;padding:0 20px 18px}
+/* ── FAQ: real animated accordion (answers stay in DOM for SEO) ──
+   The collapse only applies when JS is available (html.js, added by script.js):
+   without JavaScript every answer stays visible. script.js also upgrades each
+   .faq-q to a keyboard-operable button (role, tabindex, aria-expanded). */
+html.js .faq-a{max-height:0;overflow:hidden;padding:0 20px;transition:max-height .4s ease,padding .3s ease}
+html.js .faq-item.open .faq-a{max-height:560px;padding:0 20px 18px}
 .faq-q::after{transition:transform .25s ease}
+.faq-q:focus-visible{outline:2px solid var(--gold-light);outline-offset:-2px}
 
 /* ── Lenis smooth scrolling ── */
 html.lenis,html.lenis body{height:auto}

@@ -1,3 +1,7 @@
+/* Marca que hay JavaScript: el CSS solo colapsa las respuestas del FAQ bajo
+   html.js, así el contenido queda visible cuando JS está desactivado. */
+document.documentElement.classList.add('js');
+
 document.addEventListener('DOMContentLoaded', function () {
   // ── Hamburger menu ──
   var btn = document.querySelector('.hamburger');
@@ -11,10 +15,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ── FAQ accordion ──
+  // ── FAQ accordion (accesible: botón con teclado y aria-expanded) ──
   document.querySelectorAll('.faq-q').forEach(function (q) {
-    q.addEventListener('click', function () {
-      q.parentElement.classList.toggle('open');
+    var item = q.parentElement;
+    q.setAttribute('role', 'button');
+    q.setAttribute('tabindex', '0');
+    q.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false');
+    function toggle() {
+      var open = item.classList.toggle('open');
+      q.setAttribute('aria-expanded', String(open));
+    }
+    q.addEventListener('click', toggle);
+    q.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        toggle();
+      }
     });
   });
 
@@ -119,7 +135,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Open the first FAQ item so the accordion is discoverable
   var firstFaq = document.querySelector('.faq-item');
-  if (firstFaq) firstFaq.classList.add('open');
+  if (firstFaq) {
+    firstFaq.classList.add('open');
+    var firstFaqQ = firstFaq.querySelector('.faq-q');
+    if (firstFaqQ) firstFaqQ.setAttribute('aria-expanded', 'true');
+  }
 
   if (reduced || !('IntersectionObserver' in window)) return;
 

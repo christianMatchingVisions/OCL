@@ -1,0 +1,130 @@
+{
+  "verdict": "PASS",
+  "url": "https://onlinecasinolatino.com/mundial/estadisticas-mundial-2026/",
+  "jurisdictions": [
+    "latam",
+    "universal"
+  ],
+  "checked_at": "2026-06-11T15:29:08.824Z",
+  "summary": {
+    "critical_fails": 0,
+    "high_fails": 0,
+    "medium_fails": 0,
+    "warns": 0,
+    "passes": 16
+  },
+  "findings": [
+    {
+      "rule_id": "UNI-PAGE-IS-GAMBLING-CONTENT",
+      "severity": "n/a",
+      "status": "pass",
+      "evidence": "page contains gambling-related terms (apuestas, casino, cuotas) in chrome and closing prose",
+      "fix": "n/a"
+    },
+    {
+      "rule_id": "UNI-AGE-MARKER",
+      "severity": "high",
+      "status": "pass",
+      "evidence": "topbar age-gate +18, footer «Solo para mayores de 18 años», prose «mayor de 18 años»",
+      "fix": "add 18+ badge"
+    },
+    {
+      "rule_id": "UNI-RG-RESOURCES-PRESENT",
+      "severity": "high",
+      "status": "pass",
+      "evidence": "4 links to /juego-responsable/ (topbar, prose, responsible band, footer)",
+      "fix": ""
+    },
+    {
+      "rule_id": "UNI-NO-DECEPTIVE-LANGUAGE",
+      "severity": "high",
+      "status": "pass",
+      "evidence": "only negated uses: [\"Eso sí: la estadística explica el pasado, pero no garantiza resultados, y ninguna apuesta es segura.\",\"Nadie puede garantizarte una apuesta ganadora.\"]",
+      "fix": ""
+    },
+    {
+      "rule_id": "URGENCY-CTA",
+      "severity": "high",
+      "status": "pass",
+      "evidence": "none found",
+      "fix": ""
+    },
+    {
+      "rule_id": "UNI-NO-INDUCEMENT-TO-CHASE-LOSSES",
+      "severity": "critical",
+      "status": "pass",
+      "evidence": "none found",
+      "fix": ""
+    },
+    {
+      "rule_id": "UNI-AFFILIATE-LINK-INTEGRITY",
+      "severity": "medium",
+      "status": "pass",
+      "evidence": "no affiliate/operator links on page (by design); 0 sponsored links; external links: https://onlinecasinolatino.com/mundial/estadisticas-mundial-2026/, https://www.fifa.com/es/tournaments, https://inside.fifa.com/fifa-world-ranking/men, https://www.rsssf.org/, https://en.wikipedia.org/wiki/FIFA_World_Cup_records_and_statistics",
+      "fix": ""
+    },
+    {
+      "rule_id": "EXTERNAL-LINK-REL",
+      "severity": "medium",
+      "status": "pass",
+      "evidence": "all external links carry rel=\"noopener nofollow\" target=\"_blank\"",
+      "fix": ""
+    },
+    {
+      "rule_id": "UNI-T-AND-C-LINK",
+      "severity": "medium",
+      "status": "pass",
+      "evidence": "no bonus values or currency amounts on page",
+      "fix": ""
+    },
+    {
+      "rule_id": "UNI-NO-AUTOPLAY-MEDIA",
+      "severity": "medium",
+      "status": "pass",
+      "evidence": "no media elements",
+      "fix": ""
+    },
+    {
+      "rule_id": "UNI-DATA-FRESHNESS",
+      "severity": "low",
+      "status": "pass",
+      "evidence": "visible «Actualizado: junio 2026» + JSON-LD dateModified 2026-06-11",
+      "fix": ""
+    },
+    {
+      "rule_id": "UNI-AGE-NEUTRAL",
+      "severity": "medium",
+      "status": "pass",
+      "evidence": "no youth-targeting language; emoji use is editorial (flags/charts), consistent with site conventions",
+      "fix": ""
+    },
+    {
+      "rule_id": "UNI-VPN-WORKAROUND",
+      "severity": "critical",
+      "status": "pass",
+      "evidence": "no VPN/geo-workaround content",
+      "fix": ""
+    },
+    {
+      "rule_id": "UNI-MISSING-SCHEMA",
+      "severity": "low",
+      "status": "pass",
+      "evidence": "Article + BreadcrumbList + FAQPage JSON-LD present, inLanguage es",
+      "fix": ""
+    },
+    {
+      "rule_id": "AFFILIATE-DISCLOSURE",
+      "severity": "medium",
+      "status": "pass",
+      "evidence": "footer: «Este sitio contiene enlaces de afiliados. Juega con responsabilidad.»",
+      "fix": ""
+    },
+    {
+      "rule_id": "RISK-STATEMENT",
+      "severity": "high",
+      "status": "pass",
+      "evidence": "«la estadística explica el pasado, pero no garantiza resultados, y ninguna apuesta es segura» + responsible band",
+      "fix": ""
+    }
+  ]
+}

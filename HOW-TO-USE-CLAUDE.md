@@ -51,6 +51,12 @@ npm run preview    # serve dist/
    `igaming-compliance` skill before publishing significant new content.
 5. The Mundial 2026 section is fenced with `<!-- WC2026:START/END -->` comments
    in the fragments so it can be stripped after the World Cup.
+   **Post-tournament deletion checklist** — these standalone WC2026 files live
+   OUTSIDE the comment-fence mechanism and must be deleted manually when the
+   fenced blocks are stripped (otherwise the page stays live and indexable):
+   - `src/pages/mundial/estadisticas-mundial-2026/` (whole directory)
+   - `public/wc2026-data.js`
+   - `public/wc2026-stats.js`
 
 ---
 
@@ -114,3 +120,36 @@ If the old static site changes and you want to re-import:
 git clone --depth 1 https://github.com/MariaDevs/OCL-test.git "$env:TEMP\OCL-test"
 npm run sync:static    # converts, preserves @custom pages
 ```
+
+## Offers feed (casino bonus + CTA links from the central dashboard)
+
+Casino cards in `src/fragments/**/body.html` carry stable markers:
+
+- `data-offer="<slug>" data-offer-field="bonus"` on the leaf element holding
+  the bonus text (`.bonus-amount` / `.top3-bonus`)
+- `data-offer="<slug>" data-offer-field="cta"` on the outbound affiliate
+  anchor (`.cta-btn` / `.top3-cta`)
+
+Slugs are the folder names under `src/fragments/casinos/` (e.g. `betsson`,
+`22bet`, `ultra-casino`). After `astro build`, `scripts/apply-offers.mjs`
+fetches `GET {CE_API_URL}/offers` (same `CE_API_URL` / `CE_API_KEY` env vars
+and Bearer auth as the article feed) and rewrites **dist/ only**: bonus marker
+text is replaced with the offer's `bonusText`, CTA `href`s with `ctaUrl`.
+`rel`, `target` and classes are never touched, and source fragments are never
+modified by the apply step.
+
+Fallback: if the env vars are missing or the feed is unreachable, the step
+logs and exits 0 — the site ships with the hardcoded text from the fragments.
+`status: "paused"` offers are not removed in v1; the build log prints a
+warning listing the pages still showing that casino.
+
+Notes for editing:
+
+- The markers live in the source fragments, so they survive normal content
+  edits. If you add a **new** casino card, add the two markers yourself or
+  re-run `node scripts/add-offer-markers.mjs` (idempotent — it only tags
+  untagged cards it can attribute with certainty).
+- Keep the bonus element a leaf (text only) — the apply step replaces its
+  entire inner content.
+- `node scripts/test-apply-offers.mjs` runs an end-to-end check against a
+  local mock feed and rebuilds dist afterwards.

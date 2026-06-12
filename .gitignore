@@ -5,3 +5,6 @@ dist/
 .env.local
 .env.production
 .preview/
+
+# local tooling clone (installer copies to ~/.claude)
+claude-seo/
