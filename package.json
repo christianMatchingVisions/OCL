@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/apply-offers.mjs",
+    "build": "astro build && node scripts/apply-offers.mjs && node scripts/apply-texts.mjs",
     "preview": "astro preview",
+    "test:texts": "node scripts/test-apply-texts.mjs",
     "sync:static": "node scripts/convert-from-static.mjs"
   },
   "dependencies": {

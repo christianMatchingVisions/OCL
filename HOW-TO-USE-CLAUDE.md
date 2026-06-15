@@ -153,3 +153,25 @@ Notes for editing:
   entire inner content.
 - `node scripts/test-apply-offers.mjs` runs an end-to-end check against a
   local mock feed and rebuilds dist afterwards.
+
+## Text blocks feed (editable text from the central dashboard)
+
+Key text blocks in `src/fragments/**/body.html` carry stable
+`data-mv-text="<blockKey>"` markers (the hero subtitle `.hero-sub` and, where
+one exists, the first intro paragraph after the hero; keys follow
+`<fragment-folder-with-slashes-as-dashes>-hero-sub` / `-intro`, e.g.
+`argentina-hero-sub`, `casinos-betsson-resena-hero-sub`). After
+`apply-offers`, `scripts/apply-texts.mjs` fetches
+`GET {CE_API_URL}/text-blocks` (same env vars + Bearer auth) and rewrites
+**dist/ only**: for `kind: "marker"` blocks the tagged element's inner text
+is replaced (HTML-escaped — keep tagged elements leaves, text only); for
+`kind: "replace"` blocks the exact `originalText` is swapped in the page's
+visible text only when it occurs exactly once. Blocks where
+`currentText === originalText` are no-ops. Missing env vars or a feed error
+log a warning and exit 0 — the site ships with the hardcoded fragment text.
+
+- Re-tag after adding pages: `node scripts/add-text-markers.mjs` (idempotent;
+  also refreshes this site's entries in
+  `../_wc2026-scratch/text-blocks-seed.json`, the dashboard seed file).
+- Test: `npm run test:texts` (mock feed, asserts replacement + escaping,
+  rebuilds dist afterwards).

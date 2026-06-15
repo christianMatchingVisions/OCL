@@ -2,15 +2,19 @@
  * End-to-end test for scripts/apply-offers.mjs.
  *
  * 1. Builds the site fresh (astro build only, no apply step).
- * 2. Serves a mock offers feed on localhost (Betsson gets a sentinel bonus
- *    text + sentinel CTA URL; mr-bet is "paused" to exercise the warning).
+ * 2. Serves a mock offers feed on localhost:
+ *      - Betsson: active, sentinel bonus + sentinel CTA (override test);
+ *      - mr-bet: "paused" (HIDE test — card must be GONE everywhere);
+ *      - a toplist "top3-home" reordering the home Top-3 list (REORDER test).
  * 3. Runs the apply step against the mock feed.
  * 4. Asserts:
- *      - the sentinel bonus text appears on EVERY page that had a betsson
- *        bonus marker before the run;
- *      - every betsson CTA href changed to the sentinel URL;
- *      - rel attributes of those anchors are byte-for-byte unchanged;
- *      - non-betsson markers (e.g. rivalo) are untouched.
+ *      (override) the sentinel bonus appears on EVERY page that had a betsson
+ *        bonus marker; every betsson CTA href changed to the sentinel URL;
+ *        rel attributes byte-for-byte unchanged; rivalo (not in feed) untouched.
+ *      (HIDE) every page that carried a mr-bet card before now has NO mr-bet
+ *        card marker AND no mr-bet bonus/cta marker — gone everywhere; the
+ *        surrounding HTML stays balanced (<article> open == close).
+ *      (REORDER) the home Top-3 DOM order matches the toplist positions.
  * 5. Rebuilds to restore a clean dist/.
  *
  * Usage: node scripts/test-apply-offers.mjs
@@ -61,8 +65,21 @@ const MOCK_FEED = {
       status: "active",
     },
   ],
-  toplists: [],
+  // Reorder the home Top-3 list. Its natural order is
+  // ultra-casino > nova-jackpot > talismania; we flip it.
+  toplists: [
+    {
+      key: "top3-home",
+      name: "Top 3 del Mes",
+      entries: [
+        { casinoSlug: "talismania", position: 1, bonusTextOverride: null },
+        { casinoSlug: "ultra-casino", position: 2, bonusTextOverride: null },
+        { casinoSlug: "nova-jackpot", position: 3, bonusTextOverride: null },
+      ],
+    },
+  ],
 };
+const EXPECTED_TOP3 = ["talismania", "ultra-casino", "nova-jackpot"];
 
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir)) {
@@ -107,6 +124,32 @@ for (const file of walk(DIST)) {
   }
 }
 check(before.size > 0, `found ${before.size} dist page(s) with betsson markers before apply`);
+
+// Snapshot for HIDE. We separate two kinds of mr-bet surface:
+//   - CARD pages: a <article>/<li> card container carrying data-offer-card.
+//     These are the ones HIDE must delete (the whole card goes).
+//   - the review page (/casinos/mr-bet/resena/): the casino's OWN dedicated
+//     page, which has standalone CTAs but NO card container — out of scope for
+//     card-hiding (deleting a CTA there would orphan the page). HIDE must leave
+//     review-page CTAs in place; that is asserted separately below.
+const top3Re = /<li\b[^>]*data-offer-card="([^"]+)"[^>]*>/g;
+const mrBetCardPagesBefore = [];
+let mrBetReviewPage = null;
+let homeTop3Before = [];
+for (const file of walk(DIST)) {
+  const html = readFileSync(file, "utf8");
+  if (/data-offer-card="mr-bet"/.test(html)) mrBetCardPagesBefore.push(file);
+  else if (/data-offer="mr-bet"/.test(html)) mrBetReviewPage = file; // CTA-only page
+  if (file === join(DIST, "index.html")) {
+    top3Re.lastIndex = 0;
+    homeTop3Before = [...html.matchAll(top3Re)].map((m) => m[1]).slice(0, 3);
+  }
+}
+check(mrBetCardPagesBefore.length > 0, `found ${mrBetCardPagesBefore.length} dist page(s) with a mr-bet CARD before apply`);
+check(
+  homeTop3Before.length === 3 && JSON.stringify(homeTop3Before) !== JSON.stringify(EXPECTED_TOP3),
+  `home Top-3 starts in a DIFFERENT order than the feed wants (before: ${homeTop3Before.join(" > ")})`
+);
 
 // --- 2. mock feed server -----------------------------------------------------
 const server = createServer((req, res) => {
@@ -183,7 +226,51 @@ for (const [file, snap] of before) {
   }
 }
 
-check(/paused/i.test(applyOutput) && applyOutput.includes("mr-bet"), "apply log warns about paused mr-bet pages");
+// --- HIDE: the paused casino's CARD must be GONE from every card page --------
+let mrBetStillSomewhere = 0;
+for (const file of mrBetCardPagesBefore) {
+  const page = "/" + relative(DIST, file).split(sep).join("/");
+  const html = readFileSync(file, "utf8");
+  const cardLeft = (html.match(/data-offer-card="mr-bet"/g) || []).length;
+  const bonusLeft = (html.match(/data-offer="mr-bet" data-offer-field="bonus"/g) || []).length;
+  const ctaLeft = (html.match(/data-offer="mr-bet" data-offer-field="cta"/g) || []).length;
+  const gone = cardLeft === 0 && bonusLeft === 0 && ctaLeft === 0;
+  if (!gone) mrBetStillSomewhere++;
+  check(gone, `[HIDE] ${page}: mr-bet card fully removed (card:${cardLeft} bonus:${bonusLeft} cta:${ctaLeft})`);
+  // Page still valid: balanced <article> tags.
+  const open = (html.match(/<article\b/g) || []).length;
+  const close = (html.match(/<\/article>/g) || []).length;
+  check(open === close, `[HIDE] ${page}: <article> tags balanced after removal (${open}/${close})`);
+}
+check(mrBetStillSomewhere === 0, `[HIDE] paused mr-bet card is GONE from all ${mrBetCardPagesBefore.length} card page(s)`);
+check(applyOutput.includes("cards removed (paused):") && /mr-bet/.test(applyOutput), "[HIDE] apply log reports the paused-card removal");
+
+// The casino's own review page (CTA-only, no card container) is OUT of scope
+// for card-hiding — its standalone CTAs are intentionally left in place.
+if (mrBetReviewPage) {
+  const page = "/" + relative(DIST, mrBetReviewPage).split(sep).join("/");
+  const html = readFileSync(mrBetReviewPage, "utf8");
+  const ctaLeft = (html.match(/data-offer="mr-bet" data-offer-field="cta"/g) || []).length;
+  check(ctaLeft > 0, `[HIDE] ${page}: review page (no card) left intact — ${ctaLeft} standalone CTA(s) untouched`);
+}
+
+// --- REORDER: home Top-3 DOM order now matches the toplist -------------------
+{
+  const html = readFileSync(join(DIST, "index.html"), "utf8");
+  const order = [...html.matchAll(/<li\b[^>]*data-offer-card="([^"]+)"[^>]*>/g)].map((m) => m[1]).slice(0, 3);
+  check(
+    JSON.stringify(order) === JSON.stringify(EXPECTED_TOP3),
+    `[REORDER] home Top-3 DOM order is ${order.join(" > ")} (expected ${EXPECTED_TOP3.join(" > ")})`
+  );
+  // The reordered cards keep their full content (rank badge + bonus + cta).
+  const tali = html.match(/<li[^>]*data-offer-card="talismania"[\s\S]*?<\/li>/);
+  check(
+    !!tali && /rank-badge/.test(tali[0]) && /top3-bonus/.test(tali[0]) && /top3-cta/.test(tali[0]),
+    "[REORDER] reordered talismania card still has rank-badge + bonus + cta intact"
+  );
+  check(/lists reordered:\s*[1-9]/.test(applyOutput), "[REORDER] apply log reports a list was reordered");
+}
+
 check(applyOutput.includes("casino-inexistente"), "apply log warns about feed slug matching nothing");
 
 // --- 5. restore --------------------------------------------------------------

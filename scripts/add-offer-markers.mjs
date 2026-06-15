@@ -25,11 +25,26 @@ const ROOT = join(fileURLToPath(import.meta.url), "..", "..");
 const FRAGMENTS_DIR = join(ROOT, "src", "fragments");
 const DRY_RUN = process.argv.includes("--dry-run");
 
-/** Canonical slugs = folder names under src/fragments/casinos/ */
+/**
+ * Canonical slugs.
+ *  - The original 15 are folder names under src/fragments/casinos/ (they also
+ *    have /resena/ review pages).
+ *  - The additional 23 are brands that appear on home / /casinos / /bonos and
+ *    the 7 country pages but have NO review folder. They are registered as
+ *    site_offers (scripts/seed-offers-ocl-extra.mjs in the engine repo) and are
+ *    identified here purely by casino-name + logo filename (their CTA hosts are
+ *    shared affiliate domains, intentionally kept out of DOMAIN_MAP).
+ */
 const CANONICAL_SLUGS = new Set([
+  // original 15 (with /resena/ pages)
   "22bet", "betsson", "bitsler", "jackpotcity", "jackpoty", "leovegas",
   "lvbet", "mr-bet", "mystake", "nomini", "nova-jackpot", "rivalo",
   "stake", "talismania", "ultra-casino",
+  // additional 23 (no review pages — name + logo identity only)
+  "1go", "amunra", "apuestarey", "betano", "betobet", "beteum", "casinia",
+  "casino-universe", "codere", "dragonia", "dude-spin", "fortunazo", "frumzi",
+  "izzi", "jugabet", "magicred", "novibet", "posido", "rabona", "robocat",
+  "spin-casino", "tiki-casino", "tonybet",
 ]);
 
 /** Normalized casino display name -> slug (country suffixes stripped first). */
@@ -53,6 +68,37 @@ const NAME_MAP = new Map([
   ["nomini", "nomini"],
   ["rivalo", "rivalo"],
   ["lvbet", "lvbet"],
+  // --- additional 23 brands (normalized card names -> slug) ---------------
+  ["1go casino", "1go"],
+  ["1go", "1go"],
+  ["amunra", "amunra"],
+  ["amun ra", "amunra"],
+  ["apuestarey", "apuestarey"],
+  ["betano", "betano"],
+  ["betano casino", "betano"],
+  ["betobet", "betobet"],
+  ["beteum", "beteum"],
+  ["casinia", "casinia"],
+  ["casino universe", "casino-universe"],
+  ["codere", "codere"],
+  ["dragonia", "dragonia"],
+  ["dude spin", "dude-spin"],
+  ["fortunazo", "fortunazo"],
+  ["frumzi", "frumzi"],
+  ["izzi", "izzi"],
+  ["izzi casino", "izzi"],
+  ["jugabet", "jugabet"],
+  ["magicred", "magicred"],
+  ["magic red", "magicred"],
+  ["novibet", "novibet"],
+  ["posido", "posido"],
+  ["rabona", "rabona"],
+  ["robocat", "robocat"],
+  ["spin casino", "spin-casino"],
+  ["tiki casino", "tiki-casino"],
+  ["tiki", "tiki-casino"],
+  ["tonybet", "tonybet"],
+  ["tony bet", "tonybet"],
 ]);
 
 /** Country words stripped from the end of card names ("Talismania México"). */
@@ -78,6 +124,31 @@ const LOGO_MAP = new Map([
   ["nomini-casino-logo.png", "nomini"],
   ["rivalo-casino-logo.jpg", "rivalo"],
   ["lvbet-logo.png", "lvbet"],
+  // --- additional 23 brands (logo filename, lowercased -> slug) -----------
+  ["1go.png", "1go"],
+  ["amunra.png", "amunra"],
+  ["apuestarey.png", "apuestarey"],
+  ["betano.png", "betano"],
+  ["betobet-casino-logo.jpg", "betobet"],
+  ["beteum.png", "beteum"],
+  ["casinia.png", "casinia"],
+  ["casinia.jpg", "casinia"],
+  ["casino-universe.png", "casino-universe"],
+  ["codere-logo.png", "codere"],
+  ["dragonia.png", "dragonia"],
+  ["dude-spin.png", "dude-spin"],
+  ["fortunazo.png", "fortunazo"],
+  ["frumzi.png", "frumzi"],
+  ["izzi.png", "izzi"],
+  ["jugabet.png", "jugabet"],
+  ["magicred.png", "magicred"],
+  ["novibet.png", "novibet"],
+  ["posido.png", "posido"],
+  ["rabona.png", "rabona"],
+  ["robocat.png", "robocat"],
+  ["spin-casino.png", "spin-casino"],
+  ["tiki.png", "tiki-casino"],
+  ["tonybet.png", "tonybet"],
 ]);
 
 /**
@@ -218,9 +289,9 @@ function walk(dir, out = []) {
 }
 
 const files = walk(FRAGMENTS_DIR);
-const totals = {}; // slug -> {bonus, cta}
+const totals = {}; // slug -> {bonus, cta, card}
 const bump = (slug, field) => {
-  totals[slug] ??= { bonus: 0, cta: 0 };
+  totals[slug] ??= { bonus: 0, cta: 0, card: 0 };
   totals[slug][field]++;
 };
 let fragmentsTouched = 0;
@@ -233,7 +304,7 @@ for (const file of files) {
   const fileLog = { conflicts: new Set(), nonCanonical: new Set() };
   const fileCounts = {}; // slug -> {bonus,cta}
   const fbump = (slug, field) => {
-    fileCounts[slug] ??= { bonus: 0, cta: 0 };
+    fileCounts[slug] ??= { bonus: 0, cta: 0, card: 0 };
     fileCounts[slug][field]++;
     bump(slug, field);
   };
@@ -261,6 +332,21 @@ for (const file of files) {
         const block = content.slice(start, end);
         const slug = detectSlug(block, fileLog);
         if (!slug) continue;
+
+        // 0) card-boundary marker on the container's opening tag itself. This
+        // is what the apply step (scripts/apply-offers.mjs) walks to so it can
+        // HIDE a paused casino's whole card and REORDER cards within a list.
+        // Inert: a single data attribute, never altering layout/visible text.
+        const openTagEnd = content.indexOf(">", start);
+        const openTag = content.slice(start, openTagEnd + 1);
+        if (!openTag.includes("data-offer-card")) {
+          content = tagOpeningTag(
+            content, start, tag, `data-offer-card="${slug}"`
+          );
+          fbump(slug, "card");
+          madeChange = true;
+          break; // offsets shifted — rescan
+        }
 
         // 1) bonus leaf: <div class="bonus-amount"> or <div class="top3-bonus">
         const bonusRe = /<div\b[^>]*\bclass="(?:bonus-amount|top3-bonus)"[^>]*>/g;
@@ -341,11 +427,63 @@ for (const file of files) {
     }
   }
 
+  // Juegos game-showcase CTAs (src/fragments/juegos/body.html). These outbound
+  // brand links live in <a class="play-btn"> anchors inside <div class="game-
+  // card"> blocks — they are NOT casino-card / top3-item, so the block scan
+  // above never reaches them. The brand is identified from the anchor's visible
+  // text ("Jugar en <Brand>") via NAME_MAP, and (when the CTA host is an
+  // unambiguous single-brand domain) cross-checked against the link domain.
+  // Shared affiliate hosts (e.g. media.vegaslegends.com for Talismania) are not
+  // in DOMAIN_MAP, so for those we trust the link text only. Only the cta field
+  // is tagged (these inline CTAs carry no bonus element). rel / target / class
+  // are never modified — we only insert the two data-offer attributes.
+  if (rel === "juegos/body.html") {
+    let safety = 0;
+    let madeChange = true;
+    while (madeChange && safety++ < 200) {
+      madeChange = false;
+      const fences = fencedRanges(content);
+      // <a ... class="...play-btn..." ...>Jugar en <Brand></a>
+      const aRe = /<a\b[^>]*\bclass="[^"]*\bplay-btn\b[^"]*"[^>]*>([^<]*)<\/a>/g;
+      let am;
+      while ((am = aRe.exec(content))) {
+        const open = am[0].slice(0, am[0].indexOf(">") + 1);
+        const label = am[1];
+        if (inFence(fences, am.index)) continue;
+        if (open.includes("data-offer")) continue;
+        const href = open.match(/\bhref="([^"]+)"/);
+        if (!href || !/^https?:\/\//i.test(href[1])) continue;
+        // Brand from "Jugar en <Brand>" label.
+        const brand = label.match(/jugar\s+en\s+(.+)$/i)?.[1] ?? label;
+        const slug = NAME_MAP.get(normalizeName(brand)) ?? null;
+        if (!slug || !CANONICAL_SLUGS.has(slug)) {
+          fileLog.nonCanonical.add(brand.trim() || "(unlabelled play-btn)");
+          continue;
+        }
+        // If the host IS an unambiguous single-brand domain, it must agree.
+        const domSlug = slugFromHref(href[1]);
+        if (domSlug && domSlug !== slug) {
+          fileLog.conflicts.add(
+            `juegos play-btn labelled "${brand.trim()}" (${slug}) but CTA domain maps to "${domSlug}" (${href[1]}) — skipped`
+          );
+          continue;
+        }
+        content = tagOpeningTag(
+          content, am.index, "a",
+          `data-offer="${slug}" data-offer-field="cta"`
+        );
+        fbump(slug, "cta");
+        madeChange = true;
+        break;
+      }
+    }
+  }
+
   if (content !== original) {
     fragmentsTouched++;
     if (!DRY_RUN) writeFileSync(file, content, "utf8");
     const parts = Object.entries(fileCounts)
-      .map(([s, c]) => `${s} (bonus:${c.bonus} cta:${c.cta})`)
+      .map(([s, c]) => `${s} (card:${c.card} bonus:${c.bonus} cta:${c.cta})`)
       .join(", ");
     console.log(`[markers] ${rel}: ${parts}`);
   }
@@ -357,11 +495,12 @@ console.log("\n[markers] ===== Summary =====");
 console.log(`[markers] fragments touched: ${fragmentsTouched}${DRY_RUN ? " (dry run — nothing written)" : ""}`);
 const slugs = Object.keys(totals).sort();
 for (const s of slugs) {
-  console.log(`[markers]   ${s.padEnd(14)} bonus: ${String(totals[s].bonus).padStart(2)}  cta: ${String(totals[s].cta).padStart(2)}`);
+  console.log(`[markers]   ${s.padEnd(14)} card: ${String(totals[s].card).padStart(2)}  bonus: ${String(totals[s].bonus).padStart(2)}  cta: ${String(totals[s].cta).padStart(2)}`);
 }
+const tcard = slugs.reduce((n, s) => n + totals[s].card, 0);
 const tb = slugs.reduce((n, s) => n + totals[s].bonus, 0);
 const tc = slugs.reduce((n, s) => n + totals[s].cta, 0);
-console.log(`[markers]   total markers added this run: bonus ${tb}, cta ${tc}`);
+console.log(`[markers]   total markers added this run: card ${tcard}, bonus ${tb}, cta ${tc}`);
 if (globalLog.nonCanonical.size) {
   console.log(`[markers] skipped (not a canonical casino): ${[...globalLog.nonCanonical].sort().join(", ")}`);
 }
@@ -369,6 +508,6 @@ if (globalLog.conflicts.length) {
   console.log(`[markers] skipped (conflicting signals):`);
   for (const c of globalLog.conflicts) console.log(`[markers]   - ${c}`);
 }
-if (tb === 0 && tc === 0) {
+if (tcard === 0 && tb === 0 && tc === 0) {
   console.log("[markers] nothing to do — all identifiable elements already tagged.");
 }
