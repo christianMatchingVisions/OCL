@@ -343,3 +343,10 @@ html.lenis,html.lenis body{height:auto}
 @keyframes floatY{from{translate:0 -14px}to{translate:0 14px}}
 .hero-content{will-change:transform,opacity}
 @media (prefers-reduced-motion: reduce){.hero-deco{display:none}}
+
+/* ── Related reviews / internal-linking module ── */
+.related-reviews{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;max-width:880px;margin:0 auto}
+.related-reviews h2{font-size:1.05rem;color:var(--gold-light);margin:0 0 12px}
+.related-reviews ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px 18px}
+.related-reviews li{line-height:1.5}
+.related-reviews a{font-size:.9rem}

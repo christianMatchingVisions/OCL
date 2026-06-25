@@ -11,6 +11,10 @@ interface Props {
 }
 const { head, body } = Astro.props;
 const gaId = import.meta.env.PUBLIC_GA_ID;
+const tm = head.match(/<title>([^<]*)<\/title>/i);
+const ogTitle = tm ? tm[1].trim() : '';
+const cm = head.match(/rel=["']canonical["']\s+href=["']([^"']+)["']/i);
+const canonical = cm ? cm[1] : '';
 ---
 
 <!doctype html>
@@ -22,9 +26,14 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     {!head.includes("og:image") && (
       <meta property="og:image" content="https://onlinecasinolatino.com/logos/og-image.png" />
     )}
+    {!head.includes('property="og:title"') && ogTitle && <meta property="og:title" content={ogTitle} />}
+    {!head.includes('property="og:type"') && <meta property="og:type" content="website" />}
+    {!head.includes('property="og:url"') && canonical && <meta property="og:url" content={canonical} />}
     {!head.includes("twitter:card") && (
       <meta name="twitter:card" content="summary_large_image" />
     )}
+    {!head.includes('name="twitter:title"') && ogTitle && <meta name="twitter:title" content={ogTitle} />}
+    {!head.includes('name="twitter:image"') && <meta name="twitter:image" content="https://onlinecasinolatino.com/logos/og-image.png" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/style.css" />
     {gaId && (

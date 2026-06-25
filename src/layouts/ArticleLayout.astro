@@ -80,6 +80,8 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     {publishedAt && <meta property="article:published_time" content={publishedAt} />}
     {(updatedAt ?? publishedAt) && <meta property="article:modified_time" content={updatedAt ?? publishedAt} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:image" content={heroImage ?? "https://onlinecasinolatino.com/logos/og-image.png"} />
     <script type="application/ld+json" set:html={jsonLd} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/style.css" />
@@ -115,7 +117,7 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     </div></div>
 
     <header><div class="container"><div class="header-inner">
-      <a href="/" class="logo"><img class="logo-mark" src="/favicon.svg" alt="" width="30" height="30" />Online Casino<span> Latino</span></a>
+      <a href="/" class="logo"><img class="logo-mark" src="/favicon.svg" alt="Online Casino Latino" width="30" height="30" />Online Casino<span> Latino</span></a>
       <nav aria-label="Navegación principal"><ul>
         <li><a href="/">Inicio</a></li>
         <li><a href="/casinos/">Casinos</a></li>
