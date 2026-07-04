@@ -56,6 +56,7 @@ export const LOCALE_MAP: Record<string, LocaleEntry> = {
   "/chile/mejores-casinos-online/": { lang: "es-CL", hreflangCluster: "country-listicles" },
   "/ecuador/mejores-casinos-online/": { lang: "es-EC", hreflangCluster: "country-listicles" },
   "/peru/mejores-casinos-online/": { lang: "es-PE", hreflangCluster: "country-listicles" },
+  "/venezuela/mejores-casinos-online/": { lang: "es-VE", hreflangCluster: "country-listicles" },
 };
 
 export interface HreflangLink {
