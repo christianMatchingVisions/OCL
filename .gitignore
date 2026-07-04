@@ -8,3 +8,4 @@ dist/
 
 # local tooling clone (installer copies to ~/.claude)
 claude-seo/
+.vercel/

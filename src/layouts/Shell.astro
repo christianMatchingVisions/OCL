@@ -5,11 +5,17 @@
  * ported page renders byte-for-byte like the original. Global assets
  * (favicon, stylesheet, script.js) live here so they are managed in one place.
  */
+import { getHreflangLinks, getLang } from "../lib/locale-map";
+
 interface Props {
   head: string;
   body: string;
 }
 const { head, body } = Astro.props;
+// Route path as served (trailingSlash "always") — keys src/lib/locale-map.ts.
+const path = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const lang = getLang(path);
+const hreflangLinks = getHreflangLinks(path);
 const gaId = import.meta.env.PUBLIC_GA_ID;
 const tm = head.match(/<title>([^<]*)<\/title>/i);
 const ogTitle = tm ? tm[1].trim() : '';
@@ -18,7 +24,7 @@ const canonical = cm ? cm[1] : '';
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,6 +40,9 @@ const canonical = cm ? cm[1] : '';
     )}
     {!head.includes('name="twitter:title"') && ogTitle && <meta name="twitter:title" content={ogTitle} />}
     {!head.includes('name="twitter:image"') && <meta name="twitter:image" content="https://onlinecasinolatino.com/logos/og-image.png" />}
+    {hreflangLinks.map((l) => (
+      <link rel="alternate" hreflang={l.hreflang} href={l.href} />
+    ))}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/style.css" />
     {gaId && (
