@@ -4,6 +4,8 @@
  * pages generated from Content Engine articles. Mirrors the /noticias/ chrome
  * of the original static site.
  */
+import AffiliateClickTracker from "../components/AffiliateClickTracker.astro";
+
 interface Props {
   title: string;
   description: string;
@@ -94,6 +96,7 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
           gtag('js', new Date());
           gtag('config', gaId, { anonymize_ip: true });
         </script>
+        <AffiliateClickTracker />
       </>
     )}
     <style>

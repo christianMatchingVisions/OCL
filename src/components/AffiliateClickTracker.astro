@@ -1,0 +1,80 @@
+---
+/**
+ * AffiliateClickTracker.astro — GA4 outbound affiliate-click measurement.
+ *
+ * One event-delegated, capture-phase click listener fires a GA4
+ * `affiliate_click` event for any anchor whose rel contains "sponsored"
+ * (every affiliate link on this site carries rel="noopener sponsored
+ * nofollow"). Works for both:
+ *  - new <AffiliateLink> anchors, which carry data-brand/-market/-placement/
+ *    -pagetype/-position attributes;
+ *  - legacy fragment links without data- attrs: brand falls back to the
+ *    outbound hostname (minus "www.") or, failing that, the heading of the
+ *    nearest card, and placement is reported as "legacy".
+ *
+ * Measurement only: never calls preventDefault (navigation is not blocked;
+ * keyboard activation dispatches a click event too, so it is captured),
+ * never mutates href/rel, and sends no PII — no query strings, no input
+ * values, link text trimmed to 60 chars.
+ *
+ * Rendered only when PUBLIC_GA_ID is set (the layouts gate it alongside the
+ * gtag snippet). Idempotent: a window guard makes re-injection a no-op.
+ */
+---
+
+<script is:inline>
+  (() => {
+    if (window.__oclAffiliateClickTracker) return;
+    window.__oclAffiliateClickTracker = true;
+
+    /** Legacy-link brand fallback: outbound hostname without "www.". */
+    function hostBrand(href) {
+      try {
+        return new URL(href, window.location.origin).hostname.replace(/^www\./, "");
+      } catch {
+        return "";
+      }
+    }
+
+    /** Second fallback: heading text of the nearest enclosing card. */
+    function nearestHeading(link) {
+      const card = link.closest("article, section, li, tr, div");
+      const h = card && card.querySelector("h1, h2, h3, h4");
+      return h ? (h.textContent || "").trim().slice(0, 60) : "";
+    }
+
+    /** gtag is defined by the layout's GA snippet; keep a dataLayer fallback. */
+    function ensureGtag() {
+      window.dataLayer = window.dataLayer || [];
+      if (typeof window.gtag !== "function") {
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+      }
+      return window.gtag;
+    }
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        const target = event.target;
+        const link = target && target.closest ? target.closest("a[href]") : null;
+        if (!link) return;
+        const rel = (link.getAttribute("rel") || "").toLowerCase();
+        if (!rel.split(/\s+/).includes("sponsored")) return;
+
+        const ds = link.dataset || {};
+        ensureGtag()("event", "affiliate_click", {
+          brand: ds.brand || hostBrand(link.getAttribute("href") || "") || nearestHeading(link) || "unknown",
+          market: ds.market || "",
+          placement: ds.placement || "legacy",
+          page_type: ds.pagetype || "",
+          position: ds.position || "",
+          page_path: window.location.pathname,
+          link_text: (link.textContent || "").trim().slice(0, 60),
+        });
+      },
+      { capture: true }
+    );
+  })();
+</script>

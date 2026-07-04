@@ -5,6 +5,7 @@
  * ported page renders byte-for-byte like the original. Global assets
  * (favicon, stylesheet, script.js) live here so they are managed in one place.
  */
+import AffiliateClickTracker from "../components/AffiliateClickTracker.astro";
 import { getHreflangLinks, getLang } from "../lib/locale-map";
 
 interface Props {
@@ -54,6 +55,7 @@ const canonical = cm ? cm[1] : '';
           gtag('js', new Date());
           gtag('config', gaId, { anonymize_ip: true });
         </script>
+        <AffiliateClickTracker />
       </>
     )}
   </head>

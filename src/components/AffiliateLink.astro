@@ -1,0 +1,42 @@
+---
+/**
+ * Tracked affiliate anchor for NEW or edited pages going forward.
+ *
+ * Existing fragment links (src/fragments/) stay untouched — they are the
+ * preserved 1:1 layer and already carry the compliant rel attributes;
+ * AffiliateClickTracker.astro picks them up via their rel="sponsored".
+ *
+ * Renders rel="noopener sponsored nofollow" target="_blank" (compliance —
+ * never change) plus data- attributes that AffiliateClickTracker.astro
+ * forwards on GA4 `affiliate_click` events.
+ */
+interface Props {
+  href: string;
+  brand: string;
+  /** Target market, e.g. "mx", "ar", "latam". */
+  market?: string;
+  /** Where on the page, e.g. "toplist", "review-cta", "bonus-table". */
+  placement?: string;
+  /** e.g. "country-hub", "listicle", "review". */
+  pageType?: string;
+  /** 1-based rank within the placement. */
+  position?: number | string;
+  class?: string;
+  ariaLabel?: string;
+}
+const { href, brand, market, placement, pageType, position, class: className, ariaLabel } = Astro.props;
+---
+
+<a
+  href={href}
+  rel="noopener sponsored nofollow"
+  target="_blank"
+  class={className}
+  aria-label={ariaLabel}
+  data-aff
+  data-brand={brand}
+  data-market={market}
+  data-placement={placement}
+  data-pagetype={pageType}
+  data-position={position}
+><slot /></a>
