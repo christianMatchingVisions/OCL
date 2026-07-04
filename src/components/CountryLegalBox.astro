@@ -1,0 +1,17 @@
+---
+/**
+ * Standardized per-country legal status + responsible-gambling box.
+ * Data comes from src/data/countries.ts; markup from
+ * src/lib/country-legal-box.ts (shared with the template-literal @custom
+ * pages, which interpolate renderCountryLegalBox() directly).
+ */
+import { renderCountryLegalBox } from "../lib/country-legal-box";
+import type { CountryCode } from "../data/countries";
+
+interface Props {
+  countryCode: CountryCode;
+}
+const { countryCode } = Astro.props;
+---
+
+<Fragment set:html={renderCountryLegalBox(countryCode)} />

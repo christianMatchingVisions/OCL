@@ -52,7 +52,8 @@ const body = `
     <p class="section-sub">Los tres casinos con mejor puntuación global para jugadores ecuatorianos en junio 2026</p>
     <div class="section-divider"></div>
   </div>
-  <ol class="top3-list" aria-label="Ranking top 3 casinos Ecuador">
+  ${renderCountryLegalBox("ec")}
+<ol class="top3-list" aria-label="Ranking top 3 casinos Ecuador">
     <li class="top3-item rank-1">
       <div class="rank-badge" aria-label="Posición 1">1</div>
       <div class="top3-logo" aria-hidden="true"><img src="/logos/ultra-casino-logo.jpg" alt="Ultra Casino logo" loading="lazy" onerror="this.replaceWith(document.createTextNode('🎰'))"></div>
@@ -182,6 +183,7 @@ const body = `
 </div></footer>
 `;
 import Shell from "../../../layouts/Shell.astro";
+import { renderCountryLegalBox } from "../../../lib/country-legal-box";
 ---
 
 <Shell head={head} body={body} />
