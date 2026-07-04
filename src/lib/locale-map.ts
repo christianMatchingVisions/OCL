@@ -51,6 +51,7 @@ export const LOCALE_MAP: Record<string, LocaleEntry> = {
   // one. When a generic /mejores-casinos-online/ page exists, add it here as
   // the x-default (mirror the "country-hubs" pattern in getHreflangLinks).
   "/argentina/mejores-casinos-online/": { lang: "es-AR", hreflangCluster: "country-listicles" },
+  "/mexico/mejores-casinos-online/": { lang: "es-MX", hreflangCluster: "country-listicles" },
   "/chile/mejores-casinos-online/": { lang: "es-CL", hreflangCluster: "country-listicles" },
   "/ecuador/mejores-casinos-online/": { lang: "es-EC", hreflangCluster: "country-listicles" },
   "/peru/mejores-casinos-online/": { lang: "es-PE", hreflangCluster: "country-listicles" },
