@@ -171,6 +171,26 @@
       "permanent": true
     },
     {
+      "source": "/casino/leovegas",
+      "destination": "/casinos/leovegas/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/leovegas/",
+      "destination": "/casinos/leovegas/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/22bet-casino-resena",
+      "destination": "/casinos/22bet/resena/",
+      "permanent": true
+    },
+    {
+      "source": "/casino/22bet-casino-resena/",
+      "destination": "/casinos/22bet/resena/",
+      "permanent": true
+    },
+    {
       "source": "/casino/:path+",
       "destination": "/casinos/",
       "permanent": true
