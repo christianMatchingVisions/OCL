@@ -379,6 +379,56 @@
       "source": "/paypal-casino-online/",
       "destination": "/pagos/paypal-mexico/",
       "permanent": true
+    },
+    {
+      "source": "/paises",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/paises/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/paises/argentina",
+      "destination": "/argentina/",
+      "permanent": true
+    },
+    {
+      "source": "/paises/argentina/",
+      "destination": "/argentina/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos-gratis",
+      "destination": "/juegos/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos-gratis/",
+      "destination": "/juegos/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos-de-casino-gratis",
+      "destination": "/juegos/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos-de-casino-gratis/",
+      "destination": "/juegos/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos-de-casino-gratis/tragamonedas",
+      "destination": "/juegos/",
+      "permanent": true
+    },
+    {
+      "source": "/juegos-de-casino-gratis/tragamonedas/",
+      "destination": "/juegos/",
+      "permanent": true
     }
   ]
 }
