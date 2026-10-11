@@ -429,6 +429,16 @@
       "source": "/juegos-de-casino-gratis/tragamonedas/",
       "destination": "/juegos/",
       "permanent": true
+    },
+    {
+      "source": "/champions-league",
+      "destination": "/futbol/",
+      "permanent": true
+    },
+    {
+      "source": "/champions-league/",
+      "destination": "/futbol/",
+      "permanent": true
     }
   ]
 }
