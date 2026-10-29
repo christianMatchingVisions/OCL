@@ -135,10 +135,14 @@ h2.section-title .flag{margin-right:10px}
 .top3-item.rank-1{border-left:4px solid var(--gold)}
 .top3-item.rank-2{border-left:4px solid #9ca3af}
 .top3-item.rank-3{border-left:4px solid #b45309}
+.top3-item.rank-4{border-left:4px solid #475569}
+.top3-item.rank-5{border-left:4px solid #475569}
 .rank-badge{width:40px;height:40px;border-radius:50%;font-weight:900;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .rank-1 .rank-badge{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#000}
 .rank-2 .rank-badge{background:linear-gradient(135deg,#6b7280,#9ca3af);color:#fff}
 .rank-3 .rank-badge{background:linear-gradient(135deg,#92400e,#b45309);color:#fff}
+.rank-4 .rank-badge{background:linear-gradient(135deg,#334155,#475569);color:#fff}
+.rank-5 .rank-badge{background:linear-gradient(135deg,#334155,#475569);color:#fff}
 .top3-logo{width:48px;height:48px;border-radius:8px;background:var(--bg-card2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;overflow:hidden}
 .top3-logo img{width:100%;height:100%;object-fit:contain;padding:5px}
 .top3-meta{flex:1;min-width:0}
